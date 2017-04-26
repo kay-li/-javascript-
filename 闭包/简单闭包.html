@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			div{margin: 30px;}
+		</style>
+	</head>
+	<body>
+	</body>
+	<script>
+		
+		function a1(){
+			console.log('1');
+			function a2(){
+				console.log('2')
+			}
+			return a2;
+		}
+		a1()();
+		
+//		function fn(){
+//			var num = 100;
+//			return num;
+//		};
+		function fn(){
+			var a = 100;
+			function fn1(){
+				var b = 200;
+				console.log(b)
+			}
+			return fn1;
+		};
+		fn()()//闭包就是能够读取到其他函数内部变量的函数
+		
+		document.body.innerHTML = '<div id="box1">AAAA</div><div id="box2">BBBB</div><div id="box3">CCCC</div>';
+//		for(var i=1;i<4;i++){
+//			document.getElementById('box'+i).addEventListener('click',function(){
+//				console.log(i)
+//			})
+//		}
+		//不管点击哪一个div始终打印4,当点击div的时候才会向上找i的值,此时for循环已经初始化完毕i=4(循环里的变量i只能保存一个值)
+		
+		for(var i=1;i<4;i++){
+			!function(i){
+				document.getElementById('box'+i).addEventListener('click',function(){
+					console.log(i)
+				})
+			}(i)
+		}
+		
+		function a(){
+			var w = 999;
+//			wfn = function (){w+=1;}//这里的wfn是一个全局变量,他的值也是一个闭包
+//			function b(){
+				console.log(w);
+//			};
+//			return b;
+		}
+		var result = a();
+		result;
+//		wfn();
+		result;
+		//闭包可以让变量的值始终保存在内存中
+		
+		var name = 'leimo';
+		var obj = {
+			name : 'LEIMO',
+			objfn : function(){
+//				var that = this;
+				return function() {
+//					return that.name;
+					return this.name;
+				};
+			}
+		}
+		console.log(obj.objfn()())
+		//this的指向是在函数调用的时候确定的,函数内的this指向的是window
+	</script>
+</html>
