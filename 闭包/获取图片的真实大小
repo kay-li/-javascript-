@@ -1,0 +1,32 @@
+<script>			
+		$(function(){
+			//获取图片的数量
+			var imgNum = $(".main").find('img').length;
+			for(var i=0;i<imgNum;i++){/
+				//遍历出图片的宽高
+				!function(i){
+					var imgSrc = $(".main").find('img').eq(i).attr('src');
+					getImageWidth(imgSrc,function(w,h){
+						//当图片尺寸小于50让图片隐藏
+						if(w<50){
+							$(".main").find('img').eq(i).css({'display':'none'})
+						}
+					});
+				}(i)
+			};
+		});
+		
+		function getImageWidth(url,callback){
+			var img = new Image();
+			img.src = url;			
+			// 如果图片被缓存，则直接返回缓存数据
+			if(img.complete){
+			    callback(img.width, img.height);
+			}else{
+		        // 完全加载完毕的事件
+			    img.onload = function(){
+					callback(img.width, img.height);
+			    }
+		   }
+		}
+ </script>	
