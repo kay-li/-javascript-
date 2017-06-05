@@ -1,0 +1,32 @@
+          <span>
+             <input class="checked-all-status layout-checkbox" type="checkbox"><label class="label-img"></label>全选
+          </span>
+          <span>
+            <input class="ops-status layout-checkbox" value="0" type="checkbox" /><label class="label-img"></label>待入住
+          </span>
+          <span>
+            <input class="ops-status layout-checkbox" value="0" type="checkbox" /><label class="label-img"></label>入住
+          </span>
+          <span>
+            <input class="ops-status layout-checkbox" value="0" type="checkbox" /><label class="label-img"></label>离寺
+          </span>
+          <script>
+            //多选框的状态
+            var arr = [];
+            for(var i=0;i<$('.ops-status').length;i++){
+              arr.push(+$('.ops-status').eq(i).val());
+              !function(i){//给复选框分别绑定change事件
+                $('.ops-status').eq(i).on('change',function(){
+                  arr.splice(i,1,+$('.ops-status').eq(i).val());//替换数组中对应的元素
+                })
+              }(i);
+            };
+            //全选的时候手动改变数组的状态值
+            $('.checked-all-status').change(function(){
+              if($('.checked-all-status:checked').val()){
+                arr = [1,1,1];
+              }else{
+                arr = [0,0,0];
+              }
+            })
+          </script>
