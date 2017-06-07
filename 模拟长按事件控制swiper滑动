@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="height">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+  		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>分享</title>
+		<script src="../js/rem-init.js"></script>
+		<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+		<script src="../js/main.js"></script>
+		<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/base.css"/>
+	</head>
+	<body class="height">
+		<div id="carousel">
+			<div class="in-carousel-y">
+				<div class="swiper-wrapper">
+			    	<div class="swiper-slide img-one">
+			    		<div class="carousel-con">
+			    			<div class="inp clearfix">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="swiper-slide img-two">
+			    		<div class="carousel-con">
+			    			<div class="inp clearfix">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="swiper-slide img-three">
+			      		<div class="carousel-con">
+			    			<div class="inp">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="swiper-slide img-four">
+			      		<div class="carousel-con">
+			    			<div class="inp clearfix">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			  	</div>
+			</div>
+		</div>
+		<audio controls="controls" preload="preload" autoplay="autoplay" id="car_audio"  loop="loop" >
+			<source src="../images/banruo.mp3"></source>
+		</audio>
+		<div class="music-icon change"></div>
+	</body>
+	<script>
+    //初始化swiper
+		var mySwiper = new Swiper('.in-carousel-y',{
+			direction: 'vertical',
+			autoplay: 4000,
+				loop: true,
+				speed: 700,
+				autoplayDisableOnInteraction: false,
+			});
+		
+		//模拟长按事件，兼容iOS浏览器
+		$.fn.longPress = function(fn) {
+		  	var timeout = undefined;
+		  	var $this = this;
+		  	for(var i = 0; i < $this.length; i++) {
+		    	$this[i].addEventListener('touchstart', function(event) {
+			      	timeout = setTimeout(fn, 800);
+			    }, false);
+			    $this[i].addEventListener('touchend', function(event) {
+			      	clearTimeout(timeout);
+			    }, false);
+			}
+		}
+
+		$(".in-carousel-y").longPress(function() {  
+		    mySwiper.stopAutoplay();   
+		});
+		$(".in-carousel-y").mouseup(function() {
+		    setTimeout(function(){
+		    	mySwiper.startAutoplay();   
+		    },1000)
+		}).mouseout(function() {    
+		    setTimeout(function(){
+		    	mySwiper.startAutoplay();   
+		    },1000)
+		});  
+	</script>
+	
+	<script src="../js/music.js"></script>
+</html>
