@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="height">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit|ie-comp|ie-stand">
+  		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>分享</title>
+		<script src="rem-init.js"></script>
+		<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css"/>
+		<link rel="stylesheet" type="text/css" href="common.css"/>
+		<link rel="stylesheet" type="text/css" href="base.css"/>
+	</head>
+	<body class="height">
+		<div id="carousel">
+			<div class="in-carousel-y">
+				<div class="swiper-wrapper">
+			    	<div class="swiper-slide img-one">
+			    		<div class="carousel-con">
+			    			<div class="inp clearfix">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="swiper-slide img-two">
+			    		<div class="carousel-con">
+			    			<div class="inp clearfix">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="swiper-slide img-three">
+			      		<div class="carousel-con">
+			    			<div class="inp">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			    	<div class="swiper-slide img-four">
+			      		<div class="carousel-con">
+			    			<div class="inp clearfix">
+				    			<p class="copy-text">ABCDE</p>
+				    			<p>长按复制邀请码</p>
+				    		</div>
+			    		</div>
+			    		<div class="carousel-down">
+			    			<a href="javascript:;" ></a>
+			    			<div>
+			    				<span class="down-logo"></span>
+			    				<span class="seal"></span>
+			    			</div>
+			    		</div>
+			    	</div>
+			  	</div>
+			</div>
+		</div>
+		<audio controls="controls" preload="preload" autoplay="autoplay" id="car_audio"  loop="loop" >
+			<source src="../images/banruo.mp3"></source>
+		</audio>
+		<div class="music-icon change"></div>
+	</body>
+	<script>
+
+		//底部布局设置自动高度
+		var body = $('body').height();
+		//判断浏览器类型
+		var isMobile = {
+			Android: function() {
+				return navigator.userAgent.match(/Android/i) ? true : false;
+			},
+			iOS: function() {
+			return navigator.userAgent.match(/iPhone|iPad|iPod/i) ? true : false;
+			}
+		}
+		var ua = navigator.userAgent.toLowerCase();  
+		//兼容iPhone4之类的小屏幕手机
+		if(body <= 500 || (isMobile.Android() && ua.match(/QQ/i) == "qq" && ua.match(/MicroMessenger/i) != "micromessenger")){
+			if( history.previous != history.current ){
+		     	window.location.reload();     
+		    }
+			$('.swiper-slide .carousel-con').css({'padding-top':'121.3%'});
+			$('.img-one .carousel-con').css({'background-image':'url(../images/one-s.png)'});
+			$('.img-two .carousel-con').css({'background-image':'url(../images/two-s.png)'});
+			$('.img-three .carousel-con').css({'background-image':'url(../images/three-s.png)'});
+			$('.img-four .carousel-con').css({'background-image':'url(../images/four-s.png)'});
+		};
+		//设置底部div高度
+		var h = $('.carousel-con').innerHeight();
+		$('.carousel-down').height(body-h);
+
+		//解决iOS微信自动播放问题
+		function audioAutoPlay(id){  
+		    var audio = document.getElementById(id),  
+		        play = function(){  
+		            audio.play();  
+		            document.removeEventListener("touchstart",play, false);  
+		        };  
+		    audio.play();  
+		    document.addEventListener("WeixinJSBridgeReady", function () {  //监控微信客户端事件
+		        play();  
+		    }, false);  
+		    document.addEventListener('WeiboJSBridgeReady', function() {  //监控微博客户端事件
+		        play();  
+		    }, false);  
+		    document.addEventListener("touchstart",play, false);  //监控触摸屏幕事件
+		};
+		
+		if($('.music-icon').hasClass('change')){
+			audioAutoPlay('car_audio');  
+		};
+		
+		var z = true;
+		
+		$('.music-icon').click(function(){
+			if($(this).hasClass('change')){
+				$(this).removeClass('change');
+				$('#car_audio')[0].pause();
+			}else{
+				$(this).addClass('change');
+				$('#car_audio')[0].play();
+			};
+			z=false;
+			return z;
+		});
+	   	
+		//在微博和iOS本地浏览器打开先停止logo转动
+	   	if((isMobile.iOS() && ua.match(/QQ/i) != "qq" && ua.match(/MicroMessenger/i) != "micromessenger") || ua.match(/WeiBo/i) == "weibo"){
+			if(z){
+				$('.music-icon').removeClass('change');
+			};
+		};
+	   	$(document).bind('touchend',function(){
+	   		if(z){
+				$('.music-icon').addClass('change');
+				if($('.music-icon').hasClass('change')){
+					$('#car_audio')[0].play();
+				};
+			}
+		});
+  
+
+		var mySwiper = new Swiper('.in-carousel-y',{
+			direction: 'vertical',
+			autoplay: 4000,
+			loop: true,
+			speed: 1000,
+			effect: 'coverflow',
+			autoplayDisableOnInteraction: false,
+			onTouchStart:function(){
+				if($('.music-icon').hasClass('change')){
+					audioAutoPlay('car_audio');  
+				}
+			}
+		});
+		
+		//模拟长按事件，兼容iOS浏览器
+		$.fn.longPress = function(fn) {
+		  	var timeout = undefined;
+		  	var $this = this;
+		  	for(var i = 0; i < $this.length; i++) {
+		    	$this[i].addEventListener('touchstart', function(event) {
+			      	timeout = setTimeout(fn, 500);
+			    }, false);
+			    $this[i].addEventListener('touchend', function(event) {
+			      	clearTimeout(timeout);
+			    }, false);
+			}
+		}
+		//长按延迟轮播时间
+		$(".in-carousel-y").longPress(function() {  
+		    mySwiper.stopAutoplay(); 
+		    setTimeout(function(){
+		    	mySwiper.startAutoplay();   
+		    },3000)
+		});
+ 
+		
+	</script>
+</html>
