@@ -1,0 +1,166 @@
+//封装一个自动验证方法
+
+//验证规则
+var rules = {
+    name: function(name,txt) {
+    	if(name == '') {
+    		$.jBox.tips(txt + '不能为空!', "warning");//调用弹窗,可自定义封装
+    		return false;
+    	}
+    	
+      var searchStr = /^[\u4e00-\u9fa5]{2,}$/;
+      var searchStr2 = /^[a-zA-Z]{1,20}$/;
+      if(!searchStr.test(name) && !searchStr2.test(name)) {
+        $.jBox.tips('请填写正确的名字!', "warning")
+        return false;
+      } else {
+        return true;
+      }
+    },
+    phone: function(phone) {
+      var searchStr = /^[1]+\d{10}$/;
+      if(phone == ''){
+      	 $.jBox.tips('手机号码不能为空！', "error")
+        return false;
+      }else if(!searchStr.test(phone)) {
+        $.jBox.tips('手机号码格式不正确！', "error")
+        return false;
+      } else {
+        return true;
+      }
+    },
+    tel: function(tel) {
+      var searchStr = /^(\d{3,4}-?)?\d{7,9}$/g;
+      if(tel == ''){
+      	 $.jBox.tips('电话号码不能为空！', "error")
+        return false;
+      }else if(!searchStr.test(tel)) {
+        $.jBox.tips('电话号码格式不正确！', "error");
+        return false;
+      } else {
+        return true;
+      }
+    },
+    email: function(email) {
+      var searchStr = /(^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$)|^$/;
+      if(email == ''){
+      	 $.jBox.tips('邮箱不能为空！', "error")
+        return false;
+      }else if(!searchStr.test(email)) {
+        $.jBox.tips('邮箱格式不正确！', "error")
+        return false;
+      } else {
+        return true;
+      }
+    },
+    nation: function(email) {
+      var searchStr = /^[\u4e00-\u9fa5a-zA-Z]+$/;
+      if(email == ''){
+      	 $.jBox.tips('民族不能为空！', "error")
+        return false;
+      }else if(!searchStr.test(email)) {
+        $.jBox.tips('请填写正确的民族！', "error")
+        return false;
+      } else {
+        return true;
+      }
+    },
+    idcard: function(idcard) {
+    	var type = $('#type').val();
+      var searchStr_18 = /^(^[1-9]\d{5}[1|2]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+      var searchStr = /^[A-Za-z0-9]+$/;
+      
+      if(idcard == ''){
+      	$.jBox.tips('身份证号码不能为空！', "error")
+        return false;
+      }else if( type == 1 ){
+      	if(!( searchStr_18.test(idcard) )) {
+	        $.jBox.tips('请填写正确的身份证号码！', "error")
+	        return false;
+	      } else {
+	        return true;
+	      }
+      }else{
+      	if(!( searchStr.test(idcard) )) {
+	        $.jBox.tips('请填写正确的身份证号码！', "error")
+	        return false;
+	      } else {
+	        return true;
+	      }
+      }
+    },
+    password: function(password) {
+      var passwordRegular = /^[0-9A-Za-z]{6,}$/;
+      if(password == ''){
+	      	$.jBox.tips('密码不能为空！', "error")
+	        return false;
+	      }else if(!passwordRegular.test(password)) {
+        $.jBox.tips('密码格式不正确！', "error")
+        return false;
+      }
+      return true;
+    },
+    nulls: function(nulls, txt) {
+    	nulls = nulls.trim();
+      if(nulls == '') {
+        $.jBox.tips(txt + '不能为空！', "error");
+        return false;
+      }
+      return true;
+    },
+    login: function(nulls) {
+      if(nulls == '') {
+        $.jBox.tips('账号不能为空！', "error");
+        return false;
+      }
+      return true;
+    },
+    passagain: function(passagain) {
+      var pass = $('input[type=password]').val();
+      
+      if(passagain == ''){
+	      	$.jBox.tips('密码不能为空！', "error")
+	        return false;
+	      }else if(passagain !== pass) {
+        $.jBox.tips('两次密码输入不一致！', "error");
+        return false;
+      }
+      return true;
+    },
+    days: function(day) {
+      if(!day.match(/^\d+(\.\d+)?$/)) {
+        $.jBox.tips('请假天数不能小于等于0天！', "error");
+        return false;
+      }
+      return true;
+    }
+		
+  };
+  
+//自动验证函数,当进行表单提交时进行验证
+function ajaxFrom(callback){
+	var checkStatus = 0;
+    $(".check-inp").each(function(index, item) {
+      if(checkStatus > 0) {
+        return;
+      }
+      var key = $(this).data('rule');
+      var val = $(this).val();
+      var item = $(this).prev().text();
+      var res = ((rules[key])(val, item));
+      if(!res) {
+        $(this).addClass('err_red');
+        checkStatus++;
+      } else {
+        $(this).removeClass('err_red');
+      }
+    });
+    if(checkStatus > 0) {
+      return false;
+    }
+    if(checkStatus == 0 && typeof(callback) == 'function'){
+    	callback();
+    }
+};
+//给元素添加 class='check-inp' data-rule='TEXT' 进行调用
+
